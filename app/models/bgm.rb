@@ -1,0 +1,2 @@
+class Bgm < ApplicationRecord
+end

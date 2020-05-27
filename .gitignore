@@ -30,3 +30,14 @@
 
 # Ignore local variables for database credentials
 /config/local_env.yml
+
+# Yarn related ignores
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore dev_notes
+dev_notes.txt

@@ -1,0 +1,2 @@
+class DutyType < ApplicationRecord
+end

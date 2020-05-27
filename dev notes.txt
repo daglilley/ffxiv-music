@@ -1,0 +1,96 @@
+Search by Region:
+Zones, Instances
+
+Search by Duties:
+Duties
+
+General Search
+Zones, Instances, Duties
+
+
+# Data Structures
+
+Region
+  name:      string
+  has_many   :zones
+
+Zone
+  name:      string
+  belongs_to :region
+  has_many   :bgms, as: :listenable
+  has_many   :subzones, class_name: "Zone", foreign_key: "mainzone_id"
+  belongs_to :mainzone, class_name: "Zone", optional: true
+
+Duty_Type
+  name:      string
+  has_many   :duties
+
+Duty
+  name:      string
+  level:     integer
+  belongs_to :duty-type
+  belongs_to :expansion
+  has_many   :bgms, as: :listenable
+
+Expansion
+  number:    integer
+  name:      string
+  has_many   :duties
+  has_many   :tracks
+
+Track
+  name:      string
+  sample:    string
+  has_many   :bgm
+  belongs_to :expansion
+  has_one    :orchestrion
+
+Bgm
+  belongs_to :track
+  context:   string
+  belongs_to :listenable, polymorphic: true
+
+  add_index  :bgm, [:listenable_type, :listenable_id]
+
+Orchestrion
+  name:      string
+  belongs_to :track
+  belongs_to :orchestrion-type
+
+Orchestrion_Type
+  name:      string
+  has_many   :orchestrions
+
+
+
+
+$ bin/rails active_storage:install
+$ rails g model Bgm context:string
+$ rails g model Track name:string bgm:references
+
+
+
+
+$ rails g model Region name:string
+$ rails g model Zone name:string region:references
+
+
+
+
+
+$ rails g model 
+
+$ rails g model Duty name:string level:integer
+$ rails g model Duty-Type name:string duty:references
+
+
+$ rails g migration add_duty-type_id_to_duty duty-type_id:integer
+$ rake db:migrate
+
+
+$ rails g model Track name:string
+$ rails g model Orchestrion name:string track:references
+$ rails g model Orchestrion-Type name:string
+
+$ rails g migration add_orchestion-type_id_to_orchestrion orchestrion-type_id:integer
+$ rake db:migrate

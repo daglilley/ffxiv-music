@@ -1,0 +1,2 @@
+class OrchestrionType < ApplicationRecord
+end
