@@ -1,3 +1,6 @@
+TEXT
+
+
 Search by Region:
 Zones, Instances
 
@@ -30,25 +33,23 @@ Duty
   level:     integer
   belongs_to :duty-type
   belongs_to :expansion
-  has_many   :bgms, as: :listenable
+  has_many   :bgms, as: :instance
 
 Expansion
   number:    integer
   name:      string
   has_many   :duties
-  has_many   :tracks
 
 !! Track
   name:      string
   sample:    string
   has_many   :bgms
-  belongs_to :expansion
   has_one    :orchestrion
 
 Bgm
   belongs_to :track
   context:   string
-  belongs_to :listenable, polymorphic: true
+  belongs_to :instance, polymorphic: true
 
   add_index  :bgm, [:instance_type, :instance_id]
 
@@ -57,7 +58,7 @@ Bgm
   has_many   :orchestrions
 
 Orchestrion
-  name:      string
+ # name:      string
   belongs_to :track
   belongs_to :orchestrion-type
 
@@ -75,15 +76,10 @@ $ rails g model Orchestrion name:string track:references
 $ rails g model Orchestrion-Type name:string
 $ rake db:migrate
 
-Need to create foreign keys so can link everything together!
-same as belongs to
 
 
-
-      t.references :user, foreign_key: true
-      add_index :microposts, [:user_id, :created_at]
-
+rails g controller
+rails g views
 
 
-
-
+add cd to tracks

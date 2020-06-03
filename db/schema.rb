@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_01_082142) do
+ActiveRecord::Schema.define(version: 2020_06_03_051855) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -39,7 +39,9 @@ ActiveRecord::Schema.define(version: 2020_06_01_082142) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "instance_type", null: false
     t.bigint "instance_id", null: false
+    t.bigint "track_id", null: false
     t.index ["instance_type", "instance_id"], name: "index_bgms_on_instance_type_and_instance_id"
+    t.index ["track_id"], name: "index_bgms_on_track_id"
   end
 
   create_table "duties", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -79,12 +81,10 @@ ActiveRecord::Schema.define(version: 2020_06_01_082142) do
   end
 
   create_table "orchestrions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "orchestrion_type_id", null: false
     t.bigint "track_id", null: false
-    t.index ["name"], name: "index_orchestrions_on_name"
     t.index ["orchestrion_type_id"], name: "index_orchestrions_on_orchestrion_type_id"
     t.index ["track_id"], name: "index_orchestrions_on_track_id"
   end
@@ -97,11 +97,9 @@ ActiveRecord::Schema.define(version: 2020_06_01_082142) do
   end
 
   create_table "tracks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "expansion_id", null: false
-    t.index ["expansion_id"], name: "index_tracks_on_expansion_id"
     t.index ["name"], name: "index_tracks_on_name"
   end
 
@@ -116,9 +114,9 @@ ActiveRecord::Schema.define(version: 2020_06_01_082142) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bgms", "tracks"
   add_foreign_key "duties", "duty_types"
   add_foreign_key "duties", "expansions"
   add_foreign_key "orchestrions", "orchestrion_types"
   add_foreign_key "orchestrions", "tracks"
-  add_foreign_key "tracks", "expansions"
 end
