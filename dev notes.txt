@@ -64,22 +64,96 @@ Orchestrion
 
 
 
+Cd
+  has_many  :tracks
+
+Region
+  has_many  :duties
+
+HW duties will be tied to multiple regions I guess?
+
+CONTROLLERS
+
+Bgm               index --> main search page
+Duty              index show
+DutyType          
+Expansion         
+Orchestrion       
+OrchestrionType   
+Region            
+Track             show
+Zone              index show
 
 
-$ bin/rails active_storage:install
-$ rails g model Bgm context:string
-$ rails g model Track name:string bgm:references
-$ rails g migration add_duty-type_id_to_duty duty-type_id:integer
-$ rake db:migrate
-$ rails g model Track name:string
-$ rails g model Orchestrion name:string track:references
-$ rails g model Orchestrion-Type name:string
-$ rake db:migrate
+
+Instance
+InstanceType: Zone, Subzone, Dungeon, etc.
+
+Zone
+>subzone
+>subzone
+>subzone
+>subzone
+
+Dungeon
+
+Eden's Verse: Fulmination
+>The Gandof Thunder Plains
+>Region
 
 
 
-rails g controller
-rails g views
+Aquapolis -> Coerthas
+Canals of Uznair -> Othard
+Hidden Canals of Uznair -> Othard
+
+Region -> Zone -> Subzone
+       -> Dungeon -> Subzone
+       -> Raid -> Subzone
+       -> Trials -> Subzone
 
 
-add cd to tracks
+
+INDEX regions, instances, subzones, tracks
+
+
+Region
+  name: string
+  has_many: instances
+
+Instance
+  belongs_to: region, instance_type
+  name: string
+  level: integer
+  has_many: zones
+
+InstanceType
+  name: string
+  has_many: instances
+
+Zone
+  name: string
+  belongs_to: instance
+  has_many: musics
+
+Expansion
+  name: string
+  patch: integer
+  has_many: instances
+
+Track
+  name: string
+  sample: string
+  has_many: musics
+  has_one: orchestrion
+
+Music
+  belongs_to: track, zone
+  context: string
+
+OrchestrionType
+  name: string
+  has_many: orchestrions
+
+Orchestrion
+  belongs_to: orchestrion_type, track
